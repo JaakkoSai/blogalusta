@@ -8,7 +8,7 @@
     <div class="container">
       <h2>Edit Post</h2>
       <form
-        th:action="@{/posts/update/{id}(id=${post.id})}"
+        th:action="@{/update/{id}(id=${post.id})}"
         th:object="${post}"
         method="post"
       >

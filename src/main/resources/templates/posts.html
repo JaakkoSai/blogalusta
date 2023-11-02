@@ -7,14 +7,23 @@
   <body>
     <div class="container">
       <h2>All Posts</h2>
+
+      <form action="/login" method="get">
+        <button type="submit">Login</button>
+      </form>
+
+      <form action="/signup" method="get">
+        <button type="submit">Sign Up</button>
+      </form>
+
       <div th:if="${!posts.empty}">
         <ul>
           <li th:each="post : ${posts}">
             <span th:text="${post.title}"></span>
             <!-- Add other post details you want to display -->
             <!-- Include Edit and Delete link -->
-            <a th:href="@{/posts/edit/{id}(id=${post.id})}">Edit</a>
-            <a th:href="@{/posts/delete/{id}(id=${post.id})}">Delete</a>
+            <a th:href="@{/edit/{id}(id=${post.id})}">Edit</a>
+            <a th:href="@{/delete/{id}(id=${post.id})}">Delete</a>
           </li>
         </ul>
       </div>
