@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Add New Post</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Add New Post</h2>
+      <form th:action="@{/posts/add}" th:object="${post}" method="post">
+        <!-- Include form fields for post details -->
+        <div>
+          <label for="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            th:field="*{title}"
+            placeholder="Post Title"
+          />
+        </div>
+        <div>
+          <label for="content">Content</label>
+          <textarea
+            id="content"
+            th:field="*{content}"
+            placeholder="Post Content"
+          ></textarea>
+        </div>
+        <div>
+          <button type="submit">Add Post</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

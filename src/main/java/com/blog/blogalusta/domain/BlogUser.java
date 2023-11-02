@@ -10,14 +10,26 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.GenerationType;
 
+import jakarta.persistence.*;
+
 @Entity
 public class BlogUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
+
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
-    private String password;
+
+    @Column(name = "password", nullable = false)
+    private String passwordHash;
+
+    @Column(name = "role", nullable = false)
+    private String role;
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -26,16 +38,17 @@ public class BlogUser {
     public BlogUser() {
     }
 
-    public BlogUser(Long id, String username, String password, String email, Set<BlogPost> posts) {
-        this.id = id;
+    public BlogUser(String username, String passwordHash, String role, String email, Set<BlogPost> posts) {
+        super();
         this.username = username;
-        this.password = password;
+        this.passwordHash = passwordHash;
+        this.role = role;
         this.email = email;
         this.posts = posts;
     }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -43,19 +56,27 @@ public class BlogUser {
     }
 
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPassword() {
-        return this.password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {

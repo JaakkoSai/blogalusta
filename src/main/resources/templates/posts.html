@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>All Posts</title>
+    <!-- Add your CSS links here -->
+  </head>
+  <body>
+    <div class="container">
+      <h2>All Posts</h2>
+      <div th:if="${!posts.empty}">
+        <ul>
+          <li th:each="post : ${posts}">
+            <span th:text="${post.title}"></span>
+            <!-- Add other post details you want to display -->
+            <!-- Include Edit and Delete link -->
+            <a th:href="@{/posts/edit/{id}(id=${post.id})}">Edit</a>
+            <a th:href="@{/posts/delete/{id}(id=${post.id})}">Delete</a>
+          </li>
+        </ul>
+      </div>
+      <div th:if="${posts.empty}">
+        <p>No posts available.</p>
+      </div>
+    </div>
+  </body>
+</html>
