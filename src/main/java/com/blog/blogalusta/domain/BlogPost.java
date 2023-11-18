@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Transient;
 
 @Entity
 public class BlogPost {
@@ -15,6 +16,9 @@ public class BlogPost {
     private Long id;
     private String title;
     private String content;
+
+    @Transient
+    private String newUsername;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -60,6 +64,14 @@ public class BlogPost {
 
     public void setUser(BlogUser user) {
         this.user = user;
+    }
+
+    public String getNewUsername() {
+        return this.newUsername;
+    }
+
+    public void setNewUsername(String newUsername) {
+        this.newUsername = newUsername;
     }
 
 }

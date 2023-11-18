@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>Edit Post</title>
-    <!-- Add your CSS links here -->
   </head>
   <body>
     <div class="container">
@@ -12,7 +11,17 @@
         th:object="${post}"
         method="post"
       >
-        <!-- Include form fields for post details -->
+        <div th:if="${error}" th:text="${error}"></div>
+        <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+          <label for="newUsername">New Author Username:</label>
+          <input
+            type="text"
+            id="newUsername"
+            th:field="*{newUsername}"
+            placeholder="Enter new username"
+          />
+        </div>
+
         <div>
           <label for="title">Title</label>
           <input

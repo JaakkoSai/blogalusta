@@ -1,4 +1,4 @@
-package com.blog.blogalusta.domain;
+package com.blog.blogalusta;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.blog.blogalusta.domain.UserService;
+import com.blog.blogalusta.web.UserService;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
@@ -25,14 +25,16 @@ public class WebSecurityConfig {
                 http
                                 .authorizeHttpRequests(authorize -> authorize
 
+                                                .requestMatchers(antMatcher("/css/**")).permitAll()
                                                 .requestMatchers(antMatcher("/signup")).permitAll()
                                                 .requestMatchers(antMatcher("/saveuser")).permitAll()
                                                 .requestMatchers(antMatcher("/posts")).permitAll()
-                                                .requestMatchers(antMatcher("/edit")).permitAll()
+                                                .requestMatchers(antMatcher("/add")).permitAll()
 
+                                                .requestMatchers(antMatcher("/edit")).hasRole("ADMIN")
                                                 .requestMatchers(antMatcher("/h2-console/**")).hasRole("ADMIN")
-                                                .requestMatchers(antMatcher("/add")).hasRole("USER")
-                                                .requestMatchers(antMatcher("/update")).hasRole("USER")
+                                                .requestMatchers(antMatcher("/update")).hasRole("ADMIN")
+                                                .requestMatchers(antMatcher("/delete/{id}")).hasRole("ADMIN")
 
                                                 .anyRequest().authenticated()
 
@@ -42,11 +44,13 @@ public class WebSecurityConfig {
                                                 .frameOptions(frameoptions -> frameoptions.disable()))
                                 .formLogin(formlogin -> formlogin
                                                 .loginPage("/login")
-                                                .defaultSuccessUrl("/posts", true)
+                                                .defaultSuccessUrl("/index", true)
                                                 .permitAll())
                                 .logout(logout -> logout
                                                 .permitAll()
-                                                .logoutSuccessUrl("/posts"));
+                                                .logoutSuccessUrl("/index"))
+
+                                .csrf(csrf -> csrf.disable());
 
                 return http.build();
         }
