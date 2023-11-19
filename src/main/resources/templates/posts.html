@@ -11,22 +11,32 @@
         <button type="submit">Add post</button>
       </form>
 
-      <form action="/login" method="get">
-        <button type="submit">Login</button>
-      </form>
+      <div sec:authorize="!isAuthenticated()">
+        <a href="http://localhost:8080/login">
+          <button>Kirjaudu sisään</button>
+        </a>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+          <input type="submit" value="Kirjaudu ulos" />
+        </form>
+      </div>
 
-      <form action="/signup" method="get">
-        <button type="submit">Sign Up</button>
-      </form>
+      <div sec:authorize="!isAuthenticated()">
+        <a href="http://localhost:8080/signup">
+          <button>Signup</button>
+        </a>
+      </div>
 
       <div th:if="${!posts.empty}">
         <ul>
           <li th:each="post : ${posts}">
             <td th:text="${post.title}"></td>
             <td th:text="${post.content}"></td>
-            <td
-              th:text="${post.user != null ? post.user.username : 'Unknown Author'}"
-            ></td>
+            <a
+              th:href="@{/user/{username}(username=${post.user.username})}"
+              th:text="${post.user.username}"
+            ></a>
             <a
               th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
               th:href="@{/edit/{id}(id=${post.id})}"

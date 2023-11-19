@@ -21,6 +21,8 @@ import com.blog.blogalusta.domain.BlogPost;
 import com.blog.blogalusta.domain.BlogUser;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PostController {
@@ -123,6 +125,20 @@ public class PostController {
 
         model.addAttribute("posts", posts);
         return "posts";
+    }
+
+    @GetMapping("/user/{username}")
+    public String userProfile(@PathVariable String username, Model model) {
+        BlogUser user = userRepository.findByUsername(username);
+        if (user != null) {
+            List<BlogPost> userPosts = postService.findAllPostsByUser(user);
+            model.addAttribute("user", user);
+            model.addAttribute("posts", userPosts);
+        } else {
+            return "error";
+        }
+
+        return "user-profile";
     }
 
 }

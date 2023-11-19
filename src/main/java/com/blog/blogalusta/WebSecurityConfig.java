@@ -30,11 +30,13 @@ public class WebSecurityConfig {
                                                 .requestMatchers(antMatcher("/saveuser")).permitAll()
                                                 .requestMatchers(antMatcher("/posts")).permitAll()
                                                 .requestMatchers(antMatcher("/add")).permitAll()
+                                                .requestMatchers(antMatcher("/index")).permitAll()
 
                                                 .requestMatchers(antMatcher("/edit")).hasRole("ADMIN")
                                                 .requestMatchers(antMatcher("/h2-console/**")).hasRole("ADMIN")
                                                 .requestMatchers(antMatcher("/update")).hasRole("ADMIN")
                                                 .requestMatchers(antMatcher("/delete/{id}")).hasRole("ADMIN")
+                                                .requestMatchers(antMatcher("/api/**")).hasRole("ADMIN")
 
                                                 .anyRequest().authenticated()
 

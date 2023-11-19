@@ -30,6 +30,14 @@ public class PostService {
     }
 
     public BlogPost savePost(BlogPost post) {
+        if (post.getUser() == null) {
+            BlogUser defaultUser = uRepository.findByUsername("ADMIN");
+            if (defaultUser != null) {
+                post.setUser(defaultUser);
+            } else {
+                throw new IllegalStateException("Default user not found");
+            }
+        }
         return pRepository.save(post);
     }
 
@@ -41,7 +49,7 @@ public class PostService {
             if (editor.getUsername().equals(originalPost.getUser().getUsername())
                     || editor.getRole().equals("ROLE_ADMIN")) {
                 if (editor.getRole().equals("ROLE_ADMIN") && newUsername != null && !newUsername.isEmpty()) {
-                    BlogUser newUser = uRepository.findByUsername(newUsername);
+                    BlogUser newUser = uRepository.findByUsername(newUsername.trim());
                     if (newUser != null) {
                         updatedPost.setUser(newUser);
                     } else {
@@ -50,6 +58,8 @@ public class PostService {
                 } else {
                     updatedPost.setUser(originalPost.getUser());
                 }
+                updatedPost.setTitle(updatedPost.getTitle());
+                updatedPost.setContent(updatedPost.getContent());
                 return savePost(updatedPost);
             } else {
                 throw new SecurityException("You do not have permission to edit this post.");
@@ -59,5 +69,9 @@ public class PostService {
 
     public void deletePost(BlogPost post) {
         pRepository.delete(post);
+    }
+
+    public List<BlogPost> findAllPostsByUser(BlogUser user) {
+        return pRepository.findByUser(user);
     }
 }
