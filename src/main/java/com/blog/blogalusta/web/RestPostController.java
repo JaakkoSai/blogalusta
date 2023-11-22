@@ -56,8 +56,10 @@ public class RestPostController {
             Authentication authentication) {
         if (authentication == null) {
 
+            System.out.println("Authentication object is null, user is not authenticated.");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
         String editorUsername = authentication.getName();
         String newUsername = post.getNewUsername();
         try {

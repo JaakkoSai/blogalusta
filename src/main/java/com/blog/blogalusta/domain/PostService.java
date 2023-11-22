@@ -31,7 +31,7 @@ public class PostService {
 
     public BlogPost savePost(BlogPost post) {
         if (post.getUser() == null) {
-            BlogUser defaultUser = uRepository.findByUsername("ADMIN");
+            BlogUser defaultUser = uRepository.findByUsername("admin");
             if (defaultUser != null) {
                 post.setUser(defaultUser);
             } else {

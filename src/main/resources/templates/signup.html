@@ -22,6 +22,11 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 				<label> Re-type Password: <input type="password" th:field="*{passwordCheck}"></label>
 				<p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}">Password Match Error</p>	
 			</div>
+
+			<div>
+				<label> Email :<input type="text" th:field="*{email}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email vaaditaan</p>	
+			</div>
 			
 			<input type="submit" value="Signup"></input>		
 		</form>
