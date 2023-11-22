@@ -36,8 +36,8 @@ public class WebSecurityConfig {
                                                 .requestMatchers(antMatcher("/h2-console/**")).hasRole("ADMIN")
                                                 .requestMatchers(antMatcher("/update")).hasRole("ADMIN")
                                                 .requestMatchers(antMatcher("/delete/{id}")).hasRole("ADMIN")
-                                                .requestMatchers(antMatcher("/api/**")).hasRole("ADMIN")
-
+                                                .requestMatchers(antMatcher("/api/**")).permitAll()
+                                                .requestMatchers(antMatcher("/api/posts/**")).permitAll()
                                                 .anyRequest().authenticated()
 
                                 )

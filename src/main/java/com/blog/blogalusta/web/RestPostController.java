@@ -54,6 +54,10 @@ public class RestPostController {
     @PutMapping("/{id}")
     public ResponseEntity<BlogPost> updatePost(@PathVariable Long id, @RequestBody BlogPost post,
             Authentication authentication) {
+        if (authentication == null) {
+
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         String editorUsername = authentication.getName();
         String newUsername = post.getNewUsername();
         try {
