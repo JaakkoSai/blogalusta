@@ -34,10 +34,14 @@ public class WebSecurityConfig {
                                                 .requestMatchers(antMatcher("/index")).permitAll()
 
                                                 .requestMatchers(antMatcher("/edit")).hasRole("ADMIN")
+                                                .requestMatchers(antMatcher("/edit/**")).hasRole("ADMIN")
                                                 .requestMatchers(antMatcher("/h2-console/**")).hasRole("ADMIN")
                                                 .requestMatchers(antMatcher("/update")).hasRole("ADMIN")
+                                                .requestMatchers(antMatcher("/update/**")).hasRole("ADMIN")
                                                 .requestMatchers(antMatcher("/delete/{id}")).hasRole("ADMIN")
-                                                .requestMatchers(antMatcher("/api/**")).permitAll()
+                                                .requestMatchers(antMatcher("/api/**")).authenticated()
+
+                                                .anyRequest().authenticated()
 
                                 )
 
