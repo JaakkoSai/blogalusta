@@ -52,17 +52,13 @@ public class RestPostController {
 
     // Editoi postausta
     @PutMapping("/{id}")
-    public ResponseEntity<BlogPost> updatePost(@PathVariable Long id, @RequestBody BlogPost post,
-            Authentication authentication) {
-        if (authentication == null) {
-
-            System.out.println("Authentication object is null, user is not authenticated.");
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        String editorUsername = authentication.getName();
-        String newUsername = post.getNewUsername();
+    public ResponseEntity<BlogPost> updatePost(@PathVariable Long id, @RequestBody BlogPost post) {
         try {
+
+            String editorUsername = "admin";
+
+            String newUsername = post.getNewUsername();
+
             BlogPost updatedPost = postService.updatePost(id, post, editorUsername, newUsername);
             return new ResponseEntity<>(updatedPost, HttpStatus.OK);
         } catch (SecurityException e) {
